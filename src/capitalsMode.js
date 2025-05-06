@@ -70,7 +70,20 @@ async function renderCapitalsMode(selectedContinents) {
     `;
     return;
   }
-  const QUESTIONS = shuffle([...pool]).slice(0, 10).map((qCountry, i, arr) => {
+  let usedCountries = [];
+  let totalQuestions = 10;
+  let current = 0;
+  let selected = null;
+  let checked = false;
+  let correct = false;
+  let lastQuestion = null;
+
+  function generateQuestion() {
+    // Filter out used countries
+    const available = pool.filter(c => !usedCountries.includes(c.country));
+    if (available.length === 0) return null;
+    const qCountry = shuffle([...available])[0];
+    usedCountries.push(qCountry.country);
     // Get 3 incorrect capitals from other countries in pool
     const incorrect = shuffle(pool.filter(c => c.country !== qCountry.country)).slice(0, 3).map(c => c.capital);
     // Shuffle options
@@ -80,33 +93,20 @@ async function renderCapitalsMode(selectedContinents) {
       options,
       answer: qCountry.capital,
     };
-  });
-  let current = 0;
-  let selected = null;
-  let checked = false;
-  let correct = false;
+  }
 
   function goHome() {
     window.renderHomePage();
   }
 
-  function handleNextQuestion() {
-    if (current < 9) {
-      current++;
-      selected = null;
-      checked = false;
-      correct = false;
-      render();
-    } else {
-      // Placeholder for results page
-      document.querySelector('#app').innerHTML = `<div class='min-h-screen flex flex-col items-center justify-center bg-white'><h2 class='text-2xl font-bold mb-4'>¡Juego terminado!</h2><button class='btn btn-primary' onclick='window.renderHomePage()'>Volver al inicio</button></div>`;
-    }
-  }
-
   function render() {
-    const q = QUESTIONS[current];
-    const total = 10;
-    const progress = ((current + 1) / total) * 100;
+    if (current >= totalQuestions) {
+      document.querySelector('#app').innerHTML = `<div class='min-h-screen flex flex-col items-center justify-center bg-white'><h2 class='text-2xl font-bold mb-4'>¡Juego terminado!</h2><button class='btn btn-primary' onclick='window.renderHomePage()'>Volver al inicio</button></div>`;
+      return;
+    }
+    if (!lastQuestion) lastQuestion = generateQuestion();
+    const q = lastQuestion;
+    const progress = ((current + 1) / totalQuestions) * 100;
     document.querySelector('#app').innerHTML = `
       <div class="min-h-screen bg-white flex flex-col items-center px-4 pt-4 pb-2">
         <div class="w-full max-w-[400px]">
@@ -119,7 +119,7 @@ async function renderCapitalsMode(selectedContinents) {
                 <div class="h-3 bg-yellow-400 rounded-full transition-all duration-300" style="width: ${progress}%;"></div>
               </div>
             </div>
-            <span class="text-gray-700 font-semibold text-lg ml-2" style="min-width: 40px;">${current + 1}/10</span>
+            <span class="text-gray-700 font-semibold text-lg ml-2" style="min-width: 40px;">${current + 1}/${totalQuestions}</span>
           </div>
           <div class="mt-6 mb-2 text-center text-xl font-semibold text-gray-800">¿Cuál es la capital de este país?</div>
           <div class="text-center text-4xl font-extrabold text-gray-900 mb-8 mt-2" style="letter-spacing: -1px;">${q.country}</div>
@@ -160,8 +160,8 @@ async function renderCapitalsMode(selectedContinents) {
           <div class="min-h-[32px] mb-2 text-center">
             ${checked ? (correct ? '<span class="text-green-600 text-lg font-bold">¡Correcto!</span>' : `<span class="text-red-600 text-lg font-bold">Error: es ${q.answer}</span>`) : ''}
           </div>
-          <button id="check-btn" class="w-full mt-2 py-4 rounded-2xl text-lg font-bold tracking-wide transition-colors duration-200 mb-2 ${selected ? (checked ? 'bg-[#18b6fa] text-white shadow-md' : 'bg-[#18b6fa] text-white shadow-md') : 'bg-gray-200 text-gray-400 cursor-not-allowed'}" ${!selected || checked ? 'disabled' : ''}>
-            ${checked ? (current === 9 ? 'Ver resultados' : 'Nueva pregunta') : 'COMPROBAR'}
+          <button id="check-btn" class="w-full mt-2 py-4 rounded-2xl text-lg font-bold tracking-wide transition-colors duration-200 mb-2 ${selected || checked ? 'bg-[#18b6fa] text-white shadow-md' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}" ${(selected || checked) ? '' : 'disabled'}>
+            ${checked ? (current === totalQuestions - 1 ? 'Ver resultados' : 'Nueva pregunta') : 'COMPROBAR'}
           </button>
         </div>
       </div>
@@ -175,15 +175,21 @@ async function renderCapitalsMode(selectedContinents) {
         }
       };
     });
-    document.getElementById('check-btn').onclick = () => {
+    document.getElementById('check-btn')?.addEventListener('click', () => {
       if (!checked) {
         checked = true;
         correct = selected === q.answer;
         render();
       } else {
-        handleNextQuestion();
+        // Nueva pregunta
+        current++;
+        selected = null;
+        checked = false;
+        correct = false;
+        lastQuestion = generateQuestion();
+        render();
       }
-    };
+    });
   }
 
   render();
