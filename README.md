@@ -1,6 +1,6 @@
 # Globo Quiz
 
-A responsive web application built with Tailwind CSS v3 that tests your knowledge about the world.
+A responsive web application that tests your knowledge about world geography, where you can challenge yourself with capitals and flags of different countries.
 
 ## Features
 
@@ -8,6 +8,9 @@ A responsive web application built with Tailwind CSS v3 that tests your knowledg
 - Built with Tailwind CSS v3
 - Fast development with Vite
 - Custom components and utilities
+- Test your knowledge of world capitals
+- Challenge yourself with flag identification
+- Multiple game modes
 
 ## Getting Started
 
@@ -36,4 +39,4 @@ npm run preview
 - Tailwind CSS v3
 - Vite
 - PostCSS
-- Autoprefixer 
+- Autoprefixer
