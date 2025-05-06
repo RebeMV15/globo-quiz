@@ -32,24 +32,26 @@ function renderContinentSelector() {
 
   function render() {
     document.querySelector('#app').innerHTML = `
-      <div class="min-h-screen bg-white flex flex-col px-4 pt-4 pb-2">
-        <div class="flex items-center mb-2">
-          <button id="back-btn" class="p-2 -ml-2">
-            <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#A3A3A3" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
-          </button>
-        </div>
-        <h2 class="text-center text-2xl font-bold text-gray-700 mb-6 mt-2 leading-tight">Selecciona con qué<br>continentes quieres jugar</h2>
-        <div class="flex-1 flex flex-col justify-center">
-          <div class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-            ${continents.map((c, i) => `
-              <div class="flex items-center px-4 py-4 ${i !== 0 ? 'border-t border-gray-200' : ''} ${isSelected(c.key) ? 'bg-blue-100 border-l-4 border-[#18b6fa]' : ''} cursor-pointer continent-row" data-key="${c.key}">
-                <img src="${c.icon}" alt="${c.label}" class="w-8 h-8 mr-4" />
-                <span class="text-lg font-semibold text-gray-700">${c.label}</span>
-              </div>
-            `).join('')}
+      <div class="min-h-screen bg-white flex flex-col items-center px-4 pt-4 pb-2">
+        <div class="w-full max-w-[400px]">
+          <div class="flex items-center mb-2">
+            <button id="back-btn" class="p-2 -ml-2">
+              <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#A3A3A3" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5"/></svg>
+            </button>
           </div>
+          <h2 class="text-center text-[clamp(1.25rem,5vw,2rem)] font-bold text-gray-700 mb-6 mt-2 leading-tight">Selecciona con qué continentes quieres jugar</h2>
+          <div class="flex-1 flex flex-col justify-center">
+            <div class="rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
+              ${continents.map((c, i) => `
+                <div class="flex items-center px-4 py-4 ${i !== 0 ? 'border-t border-gray-200' : ''} ${isSelected(c.key) ? 'bg-blue-100 border-l-4 border-[#18b6fa]' : ''} cursor-pointer continent-row" data-key="${c.key}">
+                  <img src="${c.icon}" alt="${c.label}" class="w-8 h-8 mr-4" />
+                  <span class="text-lg font-semibold text-gray-700">${c.label}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+          <button id="continue-btn" class="w-full mt-8 py-4 rounded-2xl text-lg font-bold tracking-wide transition-colors duration-200 mb-2">CONTINUAR</button>
         </div>
-        <button id="continue-btn" class="w-full mt-8 py-4 rounded-2xl text-lg font-bold tracking-wide transition-colors duration-200 mb-2">CONTINUAR</button>
       </div>
     `;
     updateContinueButton();
@@ -81,7 +83,14 @@ function renderContinentSelector() {
       };
     });
     document.getElementById('continue-btn').onclick = () => {
-      // No action yet
+      if (window.selectedMode === 'capitals') {
+        if (typeof window.renderCapitalsMode === 'function') {
+          window.renderCapitalsMode([...selected]);
+        } else {
+          alert('Capitals mode not implemented yet.');
+        }
+      }
+      // TODO: Add flags mode navigation here in the future
     };
   }
 

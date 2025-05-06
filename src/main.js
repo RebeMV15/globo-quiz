@@ -1,5 +1,6 @@
 import './style.css'
 import renderContinentSelector from './continentSelector.js';
+import renderCapitalsMode from './capitalsMode.js';
 
 function renderHomePage() {
   document.querySelector('#app').innerHTML = `
@@ -46,12 +47,15 @@ function renderHomePage() {
   `;
 
   document.getElementById('mode-capitales').onclick = () => {
+    window.selectedMode = 'capitals';
     renderContinentSelector();
   };
   document.getElementById('mode-banderas').onclick = () => {
+    window.selectedMode = 'flags';
     renderContinentSelector();
   };
 }
 
 window.renderHomePage = renderHomePage;
+window.renderCapitalsMode = renderCapitalsMode;
 renderHomePage(); 
