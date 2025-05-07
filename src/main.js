@@ -1,6 +1,7 @@
 import './style.css'
 import renderContinentSelector from './continentSelector.js';
 import renderCapitalsMode from './capitalsMode.js';
+import renderFlagsMode from './flagsMode.js';
 
 function renderHomePage() {
   document.querySelector('#app').innerHTML = `
@@ -43,6 +44,9 @@ function renderHomePage() {
           </div>
         </div>
       </div>
+      <div style="padding-top:80px;text-align:center;color:#fff;font-size:12px;">
+        Made with <span style='font-size:14px;vertical-align:middle;'>&#9829;</span> by Rebeca Martínez - 2025
+      </div>
     </div>
   `;
 
@@ -58,4 +62,5 @@ function renderHomePage() {
 
 window.renderHomePage = renderHomePage;
 window.renderCapitalsMode = renderCapitalsMode;
+window.renderFlagsMode = renderFlagsMode;
 renderHomePage(); 

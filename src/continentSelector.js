@@ -89,6 +89,12 @@ function renderContinentSelector() {
         } else {
           alert('Capitals mode not implemented yet.');
         }
+      } else if (window.selectedMode === 'flags') {
+        if (typeof window.renderFlagsMode === 'function') {
+          window.renderFlagsMode([...selected]);
+        } else {
+          alert('Flags mode not implemented yet.');
+        }
       }
       // TODO: Add flags mode navigation here in the future
     };
