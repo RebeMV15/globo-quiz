@@ -3,6 +3,9 @@ import renderContinentSelector from './continentSelector.js';
 import renderCapitalsMode from './capitalsMode.js';
 import renderFlagsMode from './flagsMode.js';
 
+// Import images
+import globeGif from '../public/globo-quiz-globe.gif';
+
 function renderHomePage() {
   document.querySelector('#app').innerHTML = `
     <div class="h-screen flex flex-col items-center justify-between bg-[#25305a] px-3 py-3">
@@ -10,7 +13,7 @@ function renderHomePage() {
         <h1 class="text-3xl font-extrabold text-[#6ee900] font-[Quicksand,sans-serif] mb-1" style="letter-spacing: -1px;">Globo Quiz</h1>
         <p class="text-white text-base font-medium">Aventura mundial de Geografía</p>
       </header>
-      <img src="/globo-quiz-globe.gif" alt="Globo animado" class="w-auto h-[22vh] max-h-[180px] object-contain" />
+      <img src="${globeGif}" alt="Globo animado" class="w-auto h-[40vh] max-h-[300px] object-contain" />
       <div class="flex flex-col gap-3 w-full max-w-md">
         <div class="flex items-center bg-white rounded-2xl shadow-md px-4 py-3 mode-card" id="mode-capitales">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mr-3 overflow-hidden">

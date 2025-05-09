@@ -1,12 +1,20 @@
 import './style.css';
 
+// Import images
+import worldSvg from '../public/World.svg';
+import africaSvg from '../public/Africa.svg';
+import southAmericaSvg from '../public/South_America.svg';
+import asiaSvg from '../public/Asia.svg';
+import europeSvg from '../public/Europe.svg';
+import oceaniaSvg from '../public/Oceania.svg';
+
 const continents = [
-  { key: 'world', label: 'Todo el mundo', icon: '/World.svg' },
-  { key: 'africa', label: 'África', icon: '/Africa.svg' },
-  { key: 'america', label: 'América', icon: '/South_America.svg' },
-  { key: 'asia', label: 'Asia', icon: '/Asia.svg' },
-  { key: 'europe', label: 'Europa', icon: '/Europe.svg' },
-  { key: 'oceania', label: 'Oceanía', icon: '/Oceania.svg' },
+  { key: 'world', label: 'Todo el mundo', icon: worldSvg },
+  { key: 'africa', label: 'África', icon: africaSvg },
+  { key: 'america', label: 'América', icon: southAmericaSvg },
+  { key: 'asia', label: 'Asia', icon: asiaSvg },
+  { key: 'europe', label: 'Europa', icon: europeSvg },
+  { key: 'oceania', label: 'Oceanía', icon: oceaniaSvg },
 ];
 
 function renderContinentSelector() {
