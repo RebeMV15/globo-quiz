@@ -1,4 +1,3 @@
-import './style.css'
 import renderContinentSelector from './continentSelector.js';
 import renderCapitalsMode from './capitalsMode.js';
 import renderFlagsMode from './flagsMode.js';
