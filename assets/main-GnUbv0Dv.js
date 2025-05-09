@@ -80,7 +80,7 @@
           <button id="score-home-btn" class="w-full mt-2 py-4 rounded-2xl text-lg font-bold tracking-wide transition-colors duration-200 mb-2" style="background:#18b6fa;color:#fff;box-shadow:0 2px 0 #1899d6;">VOLVER AL INICIO</button>
         </div>
       </div>
-    `,document.getElementById("back-btn").onclick=window.renderHomePage,document.getElementById("score-home-btn").onclick=window.renderHomePage}C()}window.renderCapitalsMode=E;async function F(){return(await(await fetch("https://restcountries.com/v3.1/all")).json()).filter(t=>t.flags&&t.flags.svg&&t.region&&t.name&&t.name.common).map(t=>{var s,e;return{country:((e=(s=t.translations)==null?void 0:s.spa)==null?void 0:e.common)||t.name.common,flag:t.flags.svg,continent:t.region.toLowerCase()}})}function T(a){for(let n=a.length-1;n>0;n--){const t=Math.floor(Math.random()*(n+1));[a[n],a[t]]=[a[t],a[n]]}return a}async function q(a){document.querySelector("#app").innerHTML="<div class='min-h-screen flex flex-col items-center justify-center bg-white'><span class='text-lg'>Cargando preguntas...</span></div>";let n=await F();const t={world:null,africa:"africa",america:"americas",asia:"asia",europe:"europe",oceania:"oceania"};let s=n;if(a.includes("world")||(s=n.filter(l=>a.some(i=>t[i]===l.continent))),s.length<10){document.querySelector("#app").innerHTML=`
+    `,document.getElementById("back-btn").onclick=window.renderHomePage,document.getElementById("score-home-btn").onclick=window.renderHomePage}C()}window.renderCapitalsMode=E;async function F(){return(await(await fetch("https://restcountries.com/v3.1/all")).json()).filter(t=>t.flags&&t.flags.svg&&t.region&&t.name&&t.name.common).map(t=>{var s,e;return{country:((e=(s=t.translations)==null?void 0:s.spa)==null?void 0:e.common)||t.name.common,flag:t.flags.svg,continent:t.region.toLowerCase()}})}function T(a){for(let n=a.length-1;n>0;n--){const t=Math.floor(Math.random()*(n+1));[a[n],a[t]]=[a[t],a[n]]}return a}async function D(a){document.querySelector("#app").innerHTML="<div class='min-h-screen flex flex-col items-center justify-center bg-white'><span class='text-lg'>Cargando preguntas...</span></div>";let n=await F();const t={world:null,africa:"africa",america:"americas",asia:"asia",europe:"europe",oceania:"oceania"};let s=n;if(a.includes("world")||(s=n.filter(l=>a.some(i=>t[i]===l.continent))),s.length<10){document.querySelector("#app").innerHTML=`
       <div class='min-h-screen flex flex-col items-center justify-center bg-white'>
         <h2 class='text-2xl font-bold mb-4 text-center'>No hay suficientes países en los continentes seleccionados para un juego de 10 preguntas.</h2>
         <button class='btn btn-primary' onclick='window.renderHomePage()'>Volver al inicio</button>
@@ -142,13 +142,13 @@
           </button>
         </div>
       </div>
-    `,document.getElementById("back-btn").onclick=B,document.querySelectorAll(".option-btn").forEach(r=>{r.onclick=()=>{d||(u=r.getAttribute("data-opt"),k())}}),(h=document.getElementById("check-btn"))==null||h.addEventListener("click",()=>{d?(c++,u=null,d=!1,g=!1,p=$(),k()):(d=!0,g=u===l.answer,g&&M++,k())})}k()}window.renderFlagsMode=q;function D(){document.querySelector("#app").innerHTML=`
+    `,document.getElementById("back-btn").onclick=B,document.querySelectorAll(".option-btn").forEach(r=>{r.onclick=()=>{d||(u=r.getAttribute("data-opt"),k())}}),(h=document.getElementById("check-btn"))==null||h.addEventListener("click",()=>{d?(c++,u=null,d=!1,g=!1,p=$(),k()):(d=!0,g=u===l.answer,g&&M++,k())})}k()}window.renderFlagsMode=D;function q(){document.querySelector("#app").innerHTML=`
     <div class="h-screen flex flex-col items-center justify-between bg-[#25305a] px-3 py-3">
       <header class="w-full flex flex-col items-center">
         <h1 class="text-3xl font-extrabold text-[#6ee900] font-[Quicksand,sans-serif] mb-1" style="letter-spacing: -1px;">Globo Quiz</h1>
         <p class="text-white text-base font-medium">Aventura mundial de Geografía</p>
       </header>
-      <img src="/globo-quiz/globo-quiz-globe.gif" alt="Globo animado" class="w-auto h-[40vh] max-h-[300px] object-contain" />
+      <img src="./globo-quiz-globe.gif" alt="Globo animado" class="w-auto h-[40vh] max-h-[300px] object-contain" />
       <div class="flex flex-col gap-3 w-full max-w-md">
         <div class="flex items-center bg-white rounded-2xl shadow-md px-4 py-3 mode-card" id="mode-capitales">
           <div class="flex-shrink-0 w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center mr-3 overflow-hidden">
@@ -186,4 +186,4 @@
         Made with <span class="text-sm align-middle">&#9829;</span> by Rebeca Martínez - 2025
       </div>
     </div>
-  `,document.getElementById("mode-capitales").onclick=()=>{window.selectedMode="capitals",N()},document.getElementById("mode-banderas").onclick=()=>{window.selectedMode="flags",N()}}window.renderHomePage=D;window.renderCapitalsMode=E;window.renderFlagsMode=q;D();
+  `,document.getElementById("mode-capitales").onclick=()=>{window.selectedMode="capitals",N()},document.getElementById("mode-banderas").onclick=()=>{window.selectedMode="flags",N()}}window.renderHomePage=q;window.renderCapitalsMode=E;window.renderFlagsMode=D;q();
