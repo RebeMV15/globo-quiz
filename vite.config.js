@@ -9,11 +9,13 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
-      },
-      output: {
-        assetFileNames: 'assets/[name][extname]'
       }
     }
   },
-  publicDir: 'public'
+  publicDir: 'public',
+  resolve: {
+    alias: {
+      '@': resolve(__dirname, 'src')
+    }
+  }
 })
