@@ -28,38 +28,14 @@ async function renderFlagsMode(selectedContinents) {
   const continentMap = {
     world: null,
     africa: 'africa',
-    north_america: 'americas',
-    south_america: 'americas',
+    america: 'americas',
     asia: 'asia',
     europe: 'europe',
     oceania: 'oceania',
   };
   let pool = COUNTRIES;
   if (!selectedContinents.includes('world')) {
-    // Special handling for Americas split
-    if (selectedContinents.includes('north_america') || selectedContinents.includes('south_america')) {
-      let americas = COUNTRIES.filter(c => c.continent === 'americas');
-      let na = [];
-      let sa = [];
-      // Use subregion if available
-      for (const c of americas) {
-        if (c.country === 'Estados Unidos' || c.country === 'United States' || c.country === 'Canadá' || c.country === 'Canada' || c.country === 'México' || c.country === 'Mexico' || c.country === 'Groenlandia' || c.country === 'Greenland') na.push(c);
-        else sa.push(c);
-      }
-      pool = [];
-      if (selectedContinents.includes('north_america')) pool = pool.concat(na);
-      if (selectedContinents.includes('south_america')) pool = pool.concat(sa);
-      // Add other selected continents
-      for (const key of selectedContinents) {
-        if (key !== 'north_america' && key !== 'south_america') {
-          pool = pool.concat(COUNTRIES.filter(c => c.continent === continentMap[key]));
-        }
-      }
-      // Remove duplicates
-      pool = pool.filter((c, i, arr) => arr.findIndex(x => x.country === c.country) === i);
-    } else {
-      pool = COUNTRIES.filter(c => selectedContinents.includes(Object.keys(continentMap).find(key => continentMap[key] === c.continent)));
-    }
+    pool = COUNTRIES.filter(c => selectedContinents.some(key => continentMap[key] === c.continent));
   }
   if (pool.length < 10) {
     document.querySelector('#app').innerHTML = `
@@ -145,61 +121,63 @@ async function renderFlagsMode(selectedContinents) {
     const q = lastQuestion;
     const progress = ((current + 1) / totalQuestions) * 100;
     document.querySelector('#app').innerHTML = `
-      <div class="min-h-screen bg-white flex flex-col items-center px-4 pt-4 pb-2">
-        <div class="w-full max-w-[400px]">
-          <div class="flex items-center mb-2">
-            <button id="back-btn" class="p-2 -ml-2">
-              <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#A3A3A3" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
-            </button>
-            <div class="flex-1 mx-2">
-              <div class="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-                <div class="h-3 bg-yellow-400 rounded-full transition-all duration-300" style="width: ${progress}%;"></div>
+      <div class="h-screen bg-white flex flex-col items-center px-2 py-2 justify-between">
+        <div class="w-full max-w-[400px] flex flex-col h-full justify-between">
+          <div>
+            <div class="flex items-center mb-1">
+              <button id="back-btn" class="p-2 -ml-2">
+                <svg width="28" height="28" fill="none" viewBox="0 0 24 24" stroke="#A3A3A3" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 6l12 12M6 18L18 6"/></svg>
+              </button>
+              <div class="flex-1 mx-2">
+                <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden">
+                  <div class="h-2 bg-yellow-400 rounded-full transition-all duration-300" style="width: ${progress}%;"></div>
+                </div>
               </div>
+              <span class="text-gray-700 font-semibold text-base ml-2" style="min-width: 36px;">${current + 1}/${totalQuestions}</span>
             </div>
-            <span class="text-gray-700 font-semibold text-lg ml-2" style="min-width: 40px;">${current + 1}/${totalQuestions}</span>
-          </div>
-          <div class="mt-6 mb-2 text-center text-xl font-semibold text-gray-800">¿De qué país es esta bandera?</div>
-          <div class="flex justify-center items-center mb-8 mt-6 pb-6 pt-6">
-            <img src="${q.flag}" alt="Bandera de ${q.country}" style="width: 100%; max-width: 220px; height: auto; aspect-ratio: 4/3; object-fit: contain; border-radius: 8px; background: #fff; display: block;" />
-          </div>
-          <div class="flex flex-col mb-8" style="gap:10px;">
-            ${q.options.map((opt, i) => {
-              let borderColor = '#e5e5e5';
-              let borderWidth = '2.67px';
-              let borderBottomWidth = '8px';
-              let borderStyle = `border:${borderWidth} solid ${borderColor};border-bottom-width:${borderBottomWidth};transition:border-color 0.2s;`;
-              let borderRadius = '12px';
-              let padding = '12px 20px';
-              let font = 'font-family:Inter, sans-serif;font-weight:600;font-size:24px;line-height:52.2px;';
-              let color = '#4b4b4b';
-              let textAlign = 'center';
-              let bg = 'background:#fff;';
-              let cursor = 'cursor:pointer;';
-              if (checked) {
-                if (opt === q.answer) {
-                  borderColor = '#22c55e';
-                  color = '#22c55e';
-                  bg = selected === opt ? 'background:#d1fadf;' : 'background:#fff;';
-                  borderStyle = `border:${borderWidth} solid #22c55e;border-bottom-width:${borderBottomWidth};`;
+            <div class="mt-3 mb-1 text-center text-base font-semibold text-gray-800">¿De qué país es esta bandera?</div>
+            <div class="flex justify-center items-center mb-4 mt-2 pb-2 pt-2">
+              <img src="${q.flag}" alt="Bandera de ${q.country}" style="width: 100%; max-width: 160px; height: auto; aspect-ratio: 4/3; object-fit: contain; border-radius: 8px; background: #fff; display: block;" />
+            </div>
+            <div class="flex flex-col mb-2" style="gap:8px;">
+              ${q.options.map((opt, i) => {
+                let borderColor = '#e5e5e5';
+                let borderWidth = '2px';
+                let borderBottomWidth = '6px';
+                let borderStyle = `border:${borderWidth} solid ${borderColor};border-bottom-width:${borderBottomWidth};transition:border-color 0.2s;`;
+                let borderRadius = '10px';
+                let padding = '10px 14px';
+                let font = 'font-family:Inter, sans-serif;font-weight:600;font-size:18px;line-height:32px;';
+                let color = '#4b4b4b';
+                let textAlign = 'center';
+                let bg = 'background:#fff;';
+                let cursor = 'cursor:pointer;';
+                if (checked) {
+                  if (opt === q.answer) {
+                    borderColor = '#22c55e';
+                    color = '#22c55e';
+                    bg = selected === opt ? 'background:#d1fadf;' : 'background:#fff;';
+                    borderStyle = `border:${borderWidth} solid #22c55e;border-bottom-width:${borderBottomWidth};`;
+                  } else if (selected === opt) {
+                    borderColor = '#ef4444';
+                    color = '#ef4444';
+                    bg = 'background:#fee2e2;';
+                    borderStyle = `border:${borderWidth} solid #ef4444;border-bottom-width:${borderBottomWidth};`;
+                  }
                 } else if (selected === opt) {
-                  borderColor = '#ef4444';
-                  color = '#ef4444';
-                  bg = 'background:#fee2e2;';
-                  borderStyle = `border:${borderWidth} solid #ef4444;border-bottom-width:${borderBottomWidth};`;
+                  borderColor = '#38bdf8';
+                  color = '#38bdf8';
+                  bg = 'background:#e0f2fe;';
+                  borderStyle = `border:${borderWidth} solid #38bdf8;border-bottom-width:${borderBottomWidth};`;
                 }
-              } else if (selected === opt) {
-                borderColor = '#38bdf8';
-                color = '#38bdf8';
-                bg = 'background:#e0f2fe;';
-                borderStyle = `border:${borderWidth} solid #38bdf8;border-bottom-width:${borderBottomWidth};`;
-              }
-              return `<div class="option-btn" data-opt="${opt}" style="${borderStyle}border-radius:${borderRadius};padding:${padding};${font}color:${color};${bg}text-align:${textAlign};${cursor}" onmouseover="this.style.borderColor='#84D8FF';this.style.color='#1899D6'" onmouseout="this.style.borderColor='${borderColor}';this.style.color='${color}'">${opt}</div>`;
-            }).join('')}
+                return `<div class=\"option-btn\" data-opt=\"${opt}\" style=\"${borderStyle}border-radius:${borderRadius};padding:${padding};${font}color:${color};${bg}text-align:${textAlign};${cursor}\" onmouseover=\"this.style.borderColor='#84D8FF';this.style.color='#1899D6'\" onmouseout=\"this.style.borderColor='${borderColor}';this.style.color='${color}'\">${opt}</div>`;
+              }).join('')}
+            </div>
+            <div class="min-h-[24px] mb-1 text-center">
+              ${checked ? (correct ? '<span class="text-green-600 text-base font-bold">¡Correcto!</span>' : `<span class="text-red-600 text-base font-bold">Error: es ${q.answer}</span>`) : ''}
+            </div>
           </div>
-          <div class="min-h-[32px] mb-2 text-center">
-            ${checked ? (correct ? '<span class="text-green-600 text-lg font-bold">¡Correcto!</span>' : `<span class="text-red-600 text-lg font-bold">Error: es ${q.answer}</span>`) : ''}
-          </div>
-          <button id="check-btn" class="w-full mt-2 py-4 rounded-2xl text-lg font-bold tracking-wide transition-colors duration-200 mb-2 ${selected || checked ? 'bg-[#18b6fa] text-white shadow-md' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}" ${(selected || checked) ? '' : 'disabled'}>
+          <button id="check-btn" class="w-full py-3 rounded-2xl text-base font-bold tracking-wide transition-colors duration-200 mb-1 ${selected || checked ? 'bg-[#18b6fa] text-white shadow-md' : 'bg-gray-200 text-gray-400 cursor-not-allowed'}" ${(selected || checked) ? '' : 'disabled'}>
             ${checked ? (current === totalQuestions - 1 ? 'Ver resultados' : 'Nueva pregunta') : 'COMPROBAR'}
           </button>
         </div>
