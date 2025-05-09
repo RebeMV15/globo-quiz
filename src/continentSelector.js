@@ -1,9 +1,9 @@
 import './style.css';
 
 const continents = [
-  { key: 'world', label: 'Todo el mundo', icon: '/globo-quiz/World.svg' },
+  { key: 'world', label: 'Todo el mundo', icon: '/globo-quiz/world.svg' },
   { key: 'africa', label: 'África', icon: '/globo-quiz/Africa.svg' },
-  { key: 'america', label: 'América', icon: '/globo-quiz/South_America.svg' },
+  { key: 'america', label: 'América', icon: '/globo-quiz/South_america.svg' },
   { key: 'asia', label: 'Asia', icon: '/globo-quiz/Asia.svg' },
   { key: 'europe', label: 'Europa', icon: '/globo-quiz/Europe.svg' },
   { key: 'oceania', label: 'Oceanía', icon: '/globo-quiz/Oceania.svg' },

@@ -93,7 +93,7 @@ async function renderFlagsMode(selectedContinents) {
             <span class="text-gray-700 font-semibold text-lg ml-2" style="min-width: 40px;">${total}/${total}</span>
           </div>
           <div class="flex flex-col items-center mt-8 mb-2">
-            <img src="/earth-score.gif" alt="Globo girando" style="height: 30vh; width: auto; max-width: 100%; object-fit: contain;" />
+            <img src="/globo-quiz/earth-score.gif" alt="Globo girando" style="height: 30vh; width: auto; max-width: 100%; object-fit: contain;" />
           </div>
           <div class="text-center text-2xl font-extrabold text-gray-800 mb-6">¡Fin de la partida!</div>
           <div class="w-full flex justify-center mb-10">
