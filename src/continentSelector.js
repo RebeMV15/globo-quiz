@@ -1,12 +1,12 @@
 import './style.css';
 
 const continents = [
-  { key: 'world', label: 'Todo el mundo', icon: '/globo-quiz/world.svg' },
-  { key: 'africa', label: 'África', icon: '/globo-quiz/Africa.svg' },
-  { key: 'america', label: 'América', icon: '/globo-quiz/South_america.svg' },
-  { key: 'asia', label: 'Asia', icon: '/globo-quiz/Asia.svg' },
-  { key: 'europe', label: 'Europa', icon: '/globo-quiz/Europe.svg' },
-  { key: 'oceania', label: 'Oceanía', icon: '/globo-quiz/Oceania.svg' },
+  { key: 'world', label: 'Todo el mundo', icon: '/world.svg' },
+  { key: 'africa', label: 'África', icon: '/Africa.svg' },
+  { key: 'america', label: 'América', icon: '/South_america.svg' },
+  { key: 'asia', label: 'Asia', icon: '/Asia.svg' },
+  { key: 'europe', label: 'Europa', icon: '/Europe.svg' },
+  { key: 'oceania', label: 'Oceanía', icon: '/Oceania.svg' },
 ];
 
 function renderContinentSelector() {
