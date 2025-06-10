@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://RebeMV15.github.io/globo-quiz",
   "engines": {
-    "node": "18.x"
+    "node": ">=18.x"
   },
   "scripts": {
     "dev": "vite",

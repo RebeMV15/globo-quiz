@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import { resolve } from 'path'
 
 export default defineConfig({
-  base: '/globo-quiz/',
+  base: process.env.NODE_ENV === 'production' ? '/globo-quiz/' : '/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
