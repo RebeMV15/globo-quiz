@@ -1,8 +1,13 @@
 import './style.css';
 
 async function fetchCountries() {
-  const res = await fetch('https://restcountries.com/v3.1/all');
+  const res = await fetch('/countries.json');
   const data = await res.json();
+  if (!Array.isArray(data)) {
+    console.error('El JSON de países no es un array:', data);
+    document.querySelector('#app').innerHTML = '<div>Error al cargar los datos de países.</div>';
+    return [];
+  }
   // Map to { country, capital, continent } in Spanish
   return data
     .filter(c => c.capital && c.capital.length > 0 && c.region && c.name && c.name.common)
